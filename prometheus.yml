@@ -1,0 +1,60 @@
+# my global config
+global:
+  scrape_interval:     15s # Set the scrape interval to every 15 seconds. Default is every 1 minute.
+  evaluation_interval: 15s # Evaluate rules every 15 seconds. The default is every 1 minute.
+  # scrape_timeout is set to the global default (10s).
+
+# Alertmanager configuration
+alerting:
+  alertmanagers:
+  - static_configs:
+    - targets:
+      # - alertmanager:9093
+
+# Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
+rule_files:
+  # - "first_rules.yml"
+  # - "second_rules.yml"
+
+# A scrape configuration containing exactly one endpoint to scrape:
+# Here it's Prometheus itself.
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+    - targets: ['localhost:9090']
+
+  - job_name: 'node'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['188.166.74.161:9101']
+    scheme: https
+    tls_config:
+      ca_file: /opt/prometheus/ssl/ca.crt
+      server_name: prom.notwar.ua
+    basic_auth:
+      username: Prometheus
+      password: Wd*5c(U#c5!S(3(r#n  
+
+  - job_name: 'mysql'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['188.166.74.161:9114']
+    scheme: https
+    tls_config:
+      ca_file: /opt/prometheus/ssl/ca.crt
+      server_name: prom.notwar.ua
+    basic_auth:
+      username: Prometheus
+      password: Wd*5c(U#c5!S(3(r#n  
+
+  - job_name: 'cadvisor'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['188.166.74.161:8081']
+    scheme: https
+    tls_config:
+      ca_file: /opt/prometheus/ssl/ca.crt
+      server_name: prom.notwar.ua
+    basic_auth:
+      username: Prometheus
+      password: Wd*5c(U#c5!S(3(r#n  
